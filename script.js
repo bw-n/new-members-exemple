@@ -1,96 +1,98 @@
-/* ------------------------------------------------------------- */
-/* DÉBUT DU SCRIPT JS POUR LA SECTION DES MEMBRES              */
-/* ------------------------------------------------------------- */
+// script.js (sur GitHub Pages)
 
 document.addEventListener("DOMContentLoaded", function() {
-    let topContainer = document.getElementById("topMembers");
-    let bottomContainer = document.getElementById("bottomMembers");
 
-    const numTopMembers = 4; // Nombre de membres à afficher dans la section "Membres à l'honneur"
-    let allMembersData = []; // Pour stocker les données des membres chargées depuis JSON
+    // --- Script de turnover des membres ---
+    // Fonction pour charger les membres depuis members.json
+    async function loadMembers() {
+        try {
+            const response = await fetch('https://bw-n.github.io/new-members-featured/members.json');
+            const data = await response.json();
+            return data.members;
+        } catch (error) {
+            console.error('Erreur lors du chargement des membres:', error);
+            return [];
+        }
+    }
+
+    let allMembers = []; // Stockera tous les membres après le chargement
     let currentTopMembers = [];
     let currentBottomMembers = [];
+    const numTopMembers = 4;
+    const topContainer = document.getElementById("topMembers");
+    const bottomContainer = document.getElementById("bottomMembers");
 
-    // Fonction pour créer un bloc de membre HTML à partir des données JSON
-    function createMemberBlock(member) {
+    async function initMembers() {
+        allMembers = await loadMembers();
+        if (allMembers.length === 0) {
+            topContainer.innerHTML = "<p>Aucun membre à afficher pour le moment.</p>";
+            bottomContainer.innerHTML = "<p>🔹 Tous les membres 🔹<br>Aucun membre à afficher pour le moment.</p>";
+            return;
+        }
+
+        let shuffledMembers = [...allMembers].sort(() => Math.random() - 0.5);
+        currentTopMembers = shuffledMembers.slice(0, numTopMembers);
+        currentBottomMembers = shuffledMembers.slice(numTopMembers);
+        updateMembersDisplay();
+    }
+
+    function createMemberHtml(member) {
         return `
             <div class="member-block">
                 <div class="photo" style="background-image:url('${member.photo}')"></div>
                 <strong>${member.name}</strong>
                 <span class="profession">${member.profession}</span>
-                <a href="${member.website}" target="_blank">${member.name}'s Website</a>
+                ${member.website ? `<a href="${member.website}" target="_blank">${member.website.replace(/(^\w+:|^)\/\//, '')}</a>` : ''}
                 <span class="contact-email">${member.email}</span>
                 <div class="separator-line"></div>
             </div>
         `;
     }
 
-    // Fonction pour charger les membres depuis le fichier JSON
-    function loadMembers() {
-        // IMPORTANT: Utilisez le chemin complet vers votre fichier JSON sur GitHub Pages
-        fetch('https://bw-n.github.io/new-members-featured/members.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                allMembersData = data; // Stocke les données chargées
-                if (allMembersData.length === 0) {
-                    console.error("Le fichier members.json est vide. Aucun membre à afficher.");
-                    topContainer.innerHTML = "<p>Membres à l'honneur</p><p>Aucun membre disponible pour le moment.</p>";
-                    bottomContainer.innerHTML = "<p>🔹 Tous les membres 🔹</p><p>Aucun membre disponible pour le moment.</p>";
-                    return;
-                }
-                initializeMembers();
-                updateMembers(); // Affiche les membres initiaux
-                setInterval(updateMembers, 10000); // Démarre le turnover
-            })
-            .catch(error => {
-                console.error("Erreur lors du chargement des membres:", error);
-                topContainer.innerHTML = "<p>Membres à l'honneur</p><p>Erreur de chargement des membres.</p>";
-                bottomContainer.innerHTML = "<p>🔹 Tous les membres 🔹</p><p>Erreur de chargement des membres.</p>";
-            });
+    function updateMembersDisplay() {
+        topContainer.innerHTML = "<p>Membres à l'honneur</p>" +
+                                 currentTopMembers.map(createMemberHtml).join("");
+        bottomContainer.innerHTML = "<p>🔹 Tous les membres 🔹</p>" +
+                                     currentBottomMembers.map(createMemberHtml).join("");
     }
 
-    function initializeMembers() {
-        // Mélange les membres et les divise
-        let shuffledMembers = [...allMembersData].sort(() => Math.random() - 0.5);
-        currentTopMembers = shuffledMembers.slice(0, numTopMembers);
-        currentBottomMembers = shuffledMembers.slice(numTopMembers);
-    }
-
-    function updateMembers() {
-        if (currentBottomMembers.length === 0 && currentTopMembers.length === numTopMembers) {
-            initializeMembers(); // Réinitialise si toutes les cartes ont tourné
-        } else if (currentBottomMembers.length > 0) {
-            // Déplace le membre le plus ancien de "topMembers" vers "bottomMembers"
-            if (currentTopMembers.length >= numTopMembers && currentTopMembers.length > 0) {
-                let oldTopMember = currentTopMembers.shift();
-                currentBottomMembers.push(oldTopMember);
-            }
-            // Récupère le prochain membre de "currentBottomMembers" pour le mettre en haut
-            let nextMember = currentBottomMembers.shift();
-            if (nextMember) {
-                currentTopMembers.push(nextMember);
-            }
-        } else {
-             // Cas où tous les membres ont déjà tourné et sont en bas
-             initializeMembers();
+    function rotateMembers() {
+        if (currentBottomMembers.length === 0) {
+            currentBottomMembers = [...allMembers].sort(() => Math.random() - 0.5);
+            currentTopMembers = currentBottomMembers.splice(0, numTopMembers);
         }
 
+        let nextMember = currentBottomMembers.shift();
 
-        topContainer.innerHTML = "<p>Membres à l'honneur</p>" +
-                                 currentTopMembers.map(createMemberBlock).join("");
-        bottomContainer.innerHTML = "<p>🔹 Tous les membres 🔹</p>" +
-                                         currentBottomMembers.map(createMemberBlock).join("");
+        if (currentTopMembers.length > 0) {
+            let oldTopMember = currentTopMembers.shift();
+            currentBottomMembers.push(oldTopMember);
+        }
+
+        currentTopMembers.push(nextMember);
+        updateMembersDisplay();
     }
 
-    // --- Script d'animation d'icône par Intersection Observer ---
-    // Note: Ce script concerne l'icône "Box icon" dans votre HTML Weebly, pas les membres.
-    // Il est inclus ici pour centraliser les scripts si vous le souhaitez.
-    const iconObserver = new IntersectionObserver(entries => {
+    // Initialise les membres et lance la rotation
+    initMembers();
+    setInterval(rotateMembers, 10000); // 10000 millisecondes = 10 secondes
+
+
+    // --- Script d'effet de scroll pour le menu ---
+    // (Conservez si nav-wrap existe dans votre thème Weebly)
+    const navWrap = document.querySelector('.nav-wrap');
+    if (navWrap) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navWrap.classList.add('scrolled');
+            } else {
+                navWrap.classList.remove('scrolled');
+            }
+        });
+    }
+
+    // --- Script d'animation de l'icône ---
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -105,42 +107,151 @@ document.addEventListener("DOMContentLoaded", function() {
         threshold: 0.15
     });
 
-    // Remarque : Si vous n'avez pas d'élément avec la classe 'icon' dans le HTML de Weebly,
-    // cette partie du script ne fera rien, ce qui est inoffensif.
     document.querySelectorAll('.icon').forEach(icon => {
-        iconObserver.observe(icon);
+        observer.observe(icon);
     });
 
-    // --- Script pour le bouton de retour en haut (Smooth Scroll) ---
+    // --- Script d'animation du Canvas ---
+    const canvas = document.getElementById('networkCanvas');
+    if (canvas) { // S'assure que le canvas existe avant d'essayer de le manipuler
+        const ctx = canvas.getContext('2d');
+        let width = canvas.offsetWidth;
+        let height = canvas.offsetHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        const POINT_COUNT = 40;
+        const MAX_DISTANCE = 120;
+        const points = [];
+
+        function generatePoints() {
+            points.length = 0;
+            for (let i = 0; i < POINT_COUNT; i++) {
+                points.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                });
+            }
+        }
+
+        function distance(p1, p2) {
+            return Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < POINT_COUNT; i++) {
+                for (let j = i + 1; j < POINT_COUNT; j++) {
+                    const dist = distance(points[i], points[j]);
+                    if (dist < MAX_DISTANCE) {
+                        const alpha = 1 - dist / MAX_DISTANCE;
+                        ctx.strokeStyle = `rgba(92, 188, 224, ${alpha})`;
+                        ctx.beginPath();
+                        ctx.moveTo(points[i].x, points[i].y);
+                        ctx.lineTo(points[j].x, points[j].y);
+                        ctx.stroke();
+                    }
+                }
+                const p = points[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(92, 188, 224, 0.9)';
+                ctx.fill();
+            }
+        }
+
+        function update() {
+            for (const p of points) {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+            }
+        }
+
+        function animate() {
+            update();
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        generatePoints();
+        animate();
+
+        window.addEventListener('resize', () => {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+            generatePoints();
+        });
+    }
+
+    // --- Script Swiper (si vous utilisez Swiper ailleurs que dans le "banner-wrap") ---
+    // S'assure que les éléments Swiper existent
+    const thumbsSwiperElement = document.querySelector(".thumbs-swiper");
+    const mainSwiperElement = document.querySelector(".main-swiper");
+
+    if (thumbsSwiperElement && mainSwiperElement) {
+        const thumbsSwiper = new Swiper(".thumbs-swiper", {
+            spaceBetween: 10,
+            slidesPerView: 3,
+            freeMode: true,
+            watchSlidesProgress: true,
+            watchSlidesVisibility: true,
+        });
+        const mainSwiper = new Swiper(".main-swiper", {
+            spaceBetween: 10,
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: thumbsSwiper
+            },
+            autoplay: {
+                delay: 4500,
+                disableOnInteraction: false,
+            },
+        });
+    }
+
+
+    // --- Script du cookie banner ---
+    const banner = document.getElementById("cookie-banner");
+    const acceptBtn = document.getElementById("accept-cookies");
+    const consentKey = "cookies-consent";
+
+    if (banner && !localStorage.getItem(consentKey)) { // Vérifie que le banner existe
+        banner.style.display = "flex";
+    }
+
+    if (acceptBtn) { // Vérifie que le bouton existe
+        acceptBtn.addEventListener("click", () => {
+            localStorage.setItem(consentKey, "true");
+            banner.style.display = "none";
+        });
+    }
+
+    // --- Script du bouton Retour en haut ---
     const backToTopButton = document.getElementById("backToTopButton");
-    const mainTitle = document.getElementById("mainTitle"); // L'élément vers lequel on veut scroller
+    if (backToTopButton) { // Vérifie que le bouton existe
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) { // Affiche le bouton après 200px de défilement
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        });
 
-    // Montrer ou cacher le bouton en fonction du défilement
-    window.addEventListener("scroll", function() {
-        // Affiche le bouton si on a défilé de plus de 200px (ajustez si besoin)
-        if (window.scrollY > 200) {
-            backToTopButton.style.display = "block";
-        } else {
-            backToTopButton.style.display = "none";
-        }
-    });
-
-    // Gérer le clic sur le bouton pour le défilement fluide
-    backToTopButton.addEventListener("click", function() {
-        if (mainTitle) {
-            // Défilement vers le titre principal de la page Weebly
-            mainTitle.scrollIntoView({ behavior: "smooth" });
-        } else {
-            // Si le titre n'est pas trouvé, scroll vers le haut de la page
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-    });
-
-    // Lance le chargement des membres au démarrage
-    loadMembers();
-
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
 });
-
-/* ------------------------------------------------------------- */
-/* FIN DU SCRIPT JS POUR LA SECTION DES MEMBRES                */
-/* ------------------------------------------------------------- */
