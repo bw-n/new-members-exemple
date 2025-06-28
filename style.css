@@ -3,16 +3,20 @@ html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
+    /* overflow-x: hidden; <-- SUPPRIMÉ pour potentiellement aider avec le scroll */
     background: transparent; /* IMPORTANT: Rend le fond de l'iframe transparent */
     color: #d5d5d5;
     font-family: 'Open Sans', sans-serif;
+    /* Permet le défilement si le contenu dépasse la hauteur de l'iframe */
+    overflow-y: auto;
 }
 *, *::before, *::after { box-sizing: inherit; }
 
 /* Wrapper global pour la section, si nécessaire */
 .members-wrapper {
     width: 100%;
+    max-width: 1200px; /* Ajout d'une largeur maximale pour centrer sur les très grands écrans */
+    margin: 0 auto; /* Centre le wrapper */
     padding: 20px; /* Ajoute un peu de marge autour du contenu */
     box-sizing: border-box;
 }
@@ -39,13 +43,11 @@ h3 {
 
     /* --- NOUVEAU : Styles pour la grille CSS --- */
     display: grid;
-    /* Par défaut, 3 colonnes de taille égale, avec un minimum de 280px par colonne. */
-    /* Utilisez repeat(auto-fit, minmax(280px, 1fr)) pour que ça s'adapte au contenu. */
-    /* Adjusté à 250px pour correspondre à la largeur des .member-block plus tard */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Ajusté la minmax pour potentiellement une meilleure intégration */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 25px; /* Espace entre les éléments de la grille */
-    justify-content: center; /* Centre la grille horizontalement */
-    align-items: start; /* Align les éléments en haut de leur cellule de grille */
+    justify-items: center; /* Centre les éléments dans leurs cellules de grille */
+    align-content: start; /* Align les lignes de la grille en haut */
 }
 
 /* Assurez-vous que le texte du titre du container n'est pas affecté par la grille */
@@ -62,17 +64,13 @@ h3 {
 
 /* Bloc de chaque membre */
 .member-block {
-    /* display: inline-block; <-- SUPPRIMÉ, Géré par CSS Grid */
-    /* vertical-align: top; <-- SUPPRIMÉ, Géré par CSS Grid */
     width: 100%; /* Le bloc prendra toute la largeur de sa cellule de grille */
-    /* margin: 15px; <-- SUPPRIMÉ, Géré par gap de la grille */
     padding: 15px;
     background: #2a2a2a;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Assure que le texte déborde correctement si nécessaire */
     word-wrap: break-word;
     box-sizing: border-box; /* S'assurer que padding et border sont inclus dans la largeur */
 }
@@ -152,10 +150,11 @@ h3 {
 }
 
 /* Media Queries pour la réactivité */
-@media (max-width: 1200px) {
-    .directory-container {
-        /* 3 colonnes par défaut sur les grands écrans */
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+@media (min-width: 1201px) {
+    /* Sur les très grands écrans, force 4 colonnes pour "Membres à l'honneur" si on veut */
+    /* topMembers peut avoir sa propre configuration de grille si nécessaire */
+    #topMembers {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -171,8 +170,9 @@ h3 {
         /* 1 colonne sur les mobiles */
         grid-template-columns: 1fr;
         padding: 15px; /* Réduit le padding sur mobile */
+        gap: 15px; /* Réduit le gap sur mobile */
     }
-    .directory-container p {
+    .directory-container > p {
         margin-bottom: 10px;
     }
     h3 {
