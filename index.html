@@ -6,10 +6,38 @@
     <title>Section Nouveaux Membres - Turnover</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles pour le bouton de retour en haut */
+        #backToTopButton {
+            display: none; /* Caché par défaut */
+            position: fixed; /* Fixe sur la page */
+            bottom: 20px; /* À 20px du bas */
+            right: 20px; /* À 20px de la droite */
+            background-color: #03e9f4; /* Couleur d'accentuation */
+            color: #1a1a1a; /* Texte sombre */
+            border: none;
+            border-radius: 50%; /* Bouton rond */
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            line-height: 50px; /* Centre verticalement l'icône */
+            text-align: center;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s, background-color 0.3s;
+            z-index: 1000; /* Assure qu'il est au-dessus des autres éléments */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #backToTopButton:hover {
+            opacity: 1;
+            background-color: #00c0d7;
+        }
+    </style>
 </head>
 <body>
     <div class="members-wrapper">
-        <h3>Hybrid Human-Tech Network</h3>
+        <button id="backToTopButton" title="Retour en haut">&#9650;</button> <h3 id="mainTitle">Hybrid Human-Tech Network</h3>
 
         <div id="topMembers" class="directory-container">
             <p>Membres à l'honneur</p>
