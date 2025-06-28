@@ -9,176 +9,18 @@
 </head>
 <body>
     <div class="members-wrapper">
-        <h3>Hybrid Human-Tech Network</h3> <div id="topMembers" class="directory-container">
-            <p>Membres à l'honneur</p>
+        <h3>Hybrid Human-Tech Network</h3>
+
+        <div class="filters-section" id="filters-section">
             </div>
 
-        <div id="bottomMembers" class="directory-container">
-            <p>🔹 Tous les membres 🔹</p>
+        <div class="return-btn" id="return-btn" style="display:none;">
+            <button id="backToTopButton">↩ Retour aux domaines</button>
+        </div>
+
+        <div class="member-results-grid" id="member-results-grid">
             </div>
 
-        <template id="member-data">
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Jane Doe</strong>
-                <span class="profession">Blockchain Expert</span>
-                <a href="https://janedoe.com" target="_blank">Jane's Website</a>
-                <span class="contact-email">jane@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>John Smith</strong>
-                <span class="profession">Cybersecurity Specialist</span>
-                <a href="https://johnsmith.com" target="_blank">John's Website</a>
-                <span class="contact-email">john@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Alice Brown</strong>
-                <span class="profession">Web3 Developer</span>
-                <a href="https://alicebrown.com" target="_blank">Alice's Website</a>
-                <span class="contact-email">alice@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>David Lee</strong>
-                <span class="profession">AI Researcher</span>
-                <a href="https://davidlee.com" target="_blank">David's Website</a>
-                <span class="contact-email">david@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Sarah Green</strong>
-                <span class="profession">UX Designer</span>
-                <a href="https://sarahgreen.com" target="_blank">Sarah's Website</a>
-                <span class="contact-email">sarah@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Michael Johnson</strong>
-                <span class="profession">Smart Contract Engineer</span>
-                <a href="https://michaeljohnson.com" target="_blank">Michael's Website</a>
-                <span class="contact-email">michael@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Emily White</strong>
-                <span class="profession">Data Analyst</span>
-                <a href="https://emilywhite.com" target="_blank">Emily's Website</a>
-                <span class="contact-email">emily@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Robert Black</strong>
-                <span class="profession">Marketing Strategist</span>
-                <a href="https://robertblack.com" target="_blank">Robert's Website</a>
-                <span class="contact-email">robert@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Laura Adams</strong>
-                <span class="profession">Finance & Crypto Expert</span>
-                <a href="https://lauraadams.com" target="_blank">Laura's Website</a>
-                <span class="contact-email">laura@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Chris Miller</strong>
-                <span class="profession">Community Manager</span>
-                <a href="https://chrismiller.com" target="_blank">Chris's Website</a>
-                <span class="contact-email">chris@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Daniel Wilson</strong>
-                <span class="profession">DevOps Engineer</span>
-                <a href="https://danielwilson.com" target="_blank">Daniel's Website</a>
-                <span class="contact-email">daniel@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Olivia King</strong>
-                <span class="profession">Cloud Architect</span>
-                <a href="https://oliviaking.com" target="_blank">Olivia's Website</a>
-                <span class="contact-email">olivia@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>James Wright</strong>
-                <span class="profession">Mobile Developer</span>
-                <a href="https://jameswright.com" target="_blank">James's Website</a>
-                <span class="contact-email">james@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Sophia Hall</strong>
-                <span class="profession">Network Engineer</span>
-                <a href="https://sophiahall.com" target="_blank">Sophia's Website</a>
-                <span class="contact-email">sophia@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>William Turner</strong>
-                <span class="profession">Quantum Computing Researcher</span>
-                <a href="https://williamturner.com" target="_blank">William's Website</a>
-                <span class="contact-email">william@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Isabella Clark</strong>
-                <span class="profession">Bioinformatics Specialist</span>
-                <a href="https://isabellaclark.com" target="_blank">Isabella's Website</a>
-                <span class="contact-email">isabella@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Joseph Lewis</strong>
-                <span class="profession">Game Developer</span>
-                <a href="https://josephlewis.com" target="_blank">Joseph's Website</a>
-                <span class="contact-email">joseph@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Mia Young</strong>
-                <span class="profession">Robotics Engineer</span>
-                <a href="https://miayoung.com" target="_blank">Mia's Website</a>
-                <span class="contact-email">mia@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Benjamin Scott</strong>
-                <span class="profession">AR/VR Developer</span>
-                <a href="https://benjaminscott.com" target="_blank">Benjamin's Website</a>
-                <span class="contact-email">benjamin@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="member-block">
-                <div class="photo" style="background-image:url('https://www.weebly.com/editor/uploads/9/7/1/8/9718598/custom_themes/990953050610449310/files/logo_BW_WEB_200x200.jpg')"></div>
-                <strong>Charlotte Baker</strong>
-                <span class="profession">Ethical Hacker</span>
-                <a href="https://charlottebaker.com" target="_blank">Charlotte's Website</a>
-                <span class="contact-email">charlotte@bwxxx.bw</span>
-                <div class="separator-line"></div>
-            </div>
-        </template>
     </div>
 
     <script src="script.js"></script>
