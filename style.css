@@ -1,16 +1,12 @@
-/* Styles généraux pour le corps de l'iframe */
-html, body {
+/* Styles généraux pour le corps de la section */
+.members-section-container {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* overflow-x: hidden; <-- SUPPRIMÉ pour potentiellement aider avec le scroll */
-    background: transparent; /* IMPORTANT: Rend le fond de l'iframe transparent */
     color: #d5d5d5;
     font-family: 'Open Sans', sans-serif;
-    /* Permet le défilement si le contenu dépasse la hauteur de l'iframe */
-    overflow-y: auto;
+    background: transparent; /* Assurez-vous que le fond reste transparent si nécessaire */
 }
-*, *::before, *::after { box-sizing: inherit; }
 
 /* Wrapper global pour la section, si nécessaire */
 .members-wrapper {
@@ -21,8 +17,9 @@ html, body {
     box-sizing: border-box;
 }
 
-/* Styles pour le titre H3 qui était dans votre code d'origine */
-h3 {
+/* Styles pour le titre H3 (spécifique à la section membres) */
+/* Note: Si vous avez déjà un style global pour h3 dans Weebly, ajustez ou supprimez ici */
+.members-wrapper h3 { /* Ciblez le H3 dans .members-wrapper pour éviter les conflits */
     color: #fff;
     text-align: center;
     margin-top: 20px;
@@ -41,9 +38,8 @@ h3 {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
-    /* --- NOUVEAU : Styles pour la grille CSS --- */
+    /* Styles pour la grille CSS */
     display: grid;
-    /* Ajusté la minmax pour potentiellement une meilleure intégration */
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 25px; /* Espace entre les éléments de la grille */
     justify-items: center; /* Centre les éléments dans leurs cellules de grille */
@@ -132,27 +128,35 @@ h3 {
     margin: 15px auto 0 auto;
 }
 
-/* Styles pour l'icône et l'effet de scroll (si vous les incluez) */
-.icon-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 40px;
-    margin-top: 0;
-    align-items: center;
+/* Styles pour le bouton de retour en haut */
+#backToTopButton {
+    display: none; /* Caché par défaut */
+    position: fixed; /* Fixe sur la page */
+    bottom: 20px; /* À 20px du bas */
+    right: 20px; /* À 20px de la droite */
+    background-color: #03e9f4; /* Couleur d'accentuation */
+    color: #1a1a1a; /* Texte sombre */
+    border: none;
+    border-radius: 50%; /* Bouton rond */
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px; /* Centre verticalement l'icône */
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s, background-color 0.3s;
+    z-index: 1000; /* Assure qu'il est au-dessus des autres éléments */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.icon {
-    width: 80px;
-    opacity: 0;
-    transform: translateY(40px) rotate(-15deg);
-    transition: all 0.6s ease-out;
+#backToTopButton:hover {
+    opacity: 1;
+    background-color: #00c0d7;
 }
 
 /* Media Queries pour la réactivité */
 @media (min-width: 1201px) {
-    /* Sur les très grands écrans, force 4 colonnes pour "Membres à l'honneur" si on veut */
-    /* topMembers peut avoir sa propre configuration de grille si nécessaire */
     #topMembers {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -160,22 +164,20 @@ h3 {
 
 @media (max-width: 992px) {
     .directory-container {
-        /* 2 colonnes sur les tablettes */
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
 
 @media (max-width: 768px) {
     .directory-container {
-        /* 1 colonne sur les mobiles */
         grid-template-columns: 1fr;
-        padding: 15px; /* Réduit le padding sur mobile */
-        gap: 15px; /* Réduit le gap sur mobile */
+        padding: 15px;
+        gap: 15px;
     }
     .directory-container > p {
         margin-bottom: 10px;
     }
-    h3 {
+    .members-wrapper h3 {
         font-size: 1.5rem;
         margin-bottom: 30px;
     }
