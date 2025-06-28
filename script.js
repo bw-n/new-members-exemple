@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Fonction pour charger les membres depuis le fichier JSON
     function loadMembers() {
-        fetch('members.json') // Assurez-vous que le chemin est correct
+        // IMPORTANT: Utilisez le chemin complet vers votre fichier JSON sur GitHub Pages
+        fetch('https://bw-n.github.io/new-members-featured/members.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
              initializeMembers();
         }
 
+
         topContainer.innerHTML = "<p>Membres à l'honneur</p>" +
                                  currentTopMembers.map(createMemberBlock).join("");
         bottomContainer.innerHTML = "<p>🔹 Tous les membres 🔹</p>" +
@@ -86,6 +88,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // --- Script d'animation d'icône par Intersection Observer ---
+    // Note: Ce script concerne l'icône "Box icon" dans votre HTML Weebly, pas les membres.
+    // Il est inclus ici pour centraliser les scripts si vous le souhaitez.
     const iconObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -101,15 +105,19 @@ document.addEventListener("DOMContentLoaded", function() {
         threshold: 0.15
     });
 
+    // Remarque : Si vous n'avez pas d'élément avec la classe 'icon' dans le HTML de Weebly,
+    // cette partie du script ne fera rien, ce qui est inoffensif.
     document.querySelectorAll('.icon').forEach(icon => {
         iconObserver.observe(icon);
     });
 
     // --- Script pour le bouton de retour en haut (Smooth Scroll) ---
     const backToTopButton = document.getElementById("backToTopButton");
-    const mainTitle = document.getElementById("mainTitle");
+    const mainTitle = document.getElementById("mainTitle"); // L'élément vers lequel on veut scroller
 
+    // Montrer ou cacher le bouton en fonction du défilement
     window.addEventListener("scroll", function() {
+        // Affiche le bouton si on a défilé de plus de 200px (ajustez si besoin)
         if (window.scrollY > 200) {
             backToTopButton.style.display = "block";
         } else {
@@ -117,10 +125,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // Gérer le clic sur le bouton pour le défilement fluide
     backToTopButton.addEventListener("click", function() {
         if (mainTitle) {
+            // Défilement vers le titre principal de la page Weebly
             mainTitle.scrollIntoView({ behavior: "smooth" });
         } else {
+            // Si le titre n'est pas trouvé, scroll vers le haut de la page
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
     });
