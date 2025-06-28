@@ -1,13 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Script est en cours d'exécution : DOMContentLoaded a été déclenché."); // <-- AJOUTEZ CETTE LIGNE
+
     const bottomMembersContainer = document.getElementById('bottomMembers');
     
-    // C'est cette ligne que vous devez mettre à jour
-    const membersDataUrl = 'https://raw.githubusercontent.com/bw-n/new-members-featured/main/members.json'; 
+    const membersDataUrl = 'https://raw.githubusercontent.com/bw-n/new-members-featured/main/members.json';
 
     if (!bottomMembersContainer) {
         console.error("L'élément avec l'ID 'bottomMembers' n'a pas été trouvé.");
-        return;
+        return; 
     }
+
+    console.log("Conteneur 'bottomMembers' trouvé, tentative de récupération du JSON."); // <-- AJOUTEZ CETTE LIGNE
 
     fetch(membersDataUrl)
         .then(response => {
@@ -17,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(members => {
+            console.log("Données des membres récupérées avec succès :", members); // <-- AJOUTEZ CETTE LIGNE (avant la boucle forEach)
             members.forEach(member => {
                 const memberBlock = document.createElement('div');
                 memberBlock.classList.add('member-block');
