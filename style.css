@@ -1,79 +1,60 @@
-/* Styles généraux pour le corps de la section */
+/* style.css (sur GitHub Pages) */
+
+/* Styles pour le conteneur global des membres */
 .members-section-container {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: #d5d5d5;
-    font-family: 'Open Sans', sans-serif;
-    background: transparent; /* Assurez-vous que le fond reste transparent si nécessaire */
-}
-
-/* Wrapper global pour la section, si nécessaire */
-.members-wrapper {
     width: 100%;
-    max-width: 1200px; /* Ajout d'une largeur maximale pour centrer sur les très grands écrans */
-    margin: 0 auto; /* Centre le wrapper */
-    padding: 20px; /* Ajoute un peu de marge autour du contenu */
+    max-width: 1200px; /* Ou la largeur souhaitée */
+    margin: 40px auto;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
-/* Styles pour le titre H3 (spécifique à la section membres) */
-/* Note: Si vous avez déjà un style global pour h3 dans Weebly, ajustez ou supprimez ici */
-.members-wrapper h3 { /* Ciblez le H3 dans .members-wrapper pour éviter les conflits */
-    color: #fff;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 2px;
+.members-wrapper {
+    position: relative;
 }
 
-/* Conteneurs pour les membres (top et bottom) */
+/* Styles pour les conteneurs de directory (Membres à l'honneur et Tous les membres) */
 .directory-container {
-    padding: 20px;
-    margin-bottom: 30px;
-    text-align: center; /* Centre le texte dans ces conteneurs */
-    background: #1a1a1a; /* Un fond sombre pour contraster */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-    /* Styles pour la grille CSS */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px; /* Espace entre les éléments de la grille */
-    justify-items: center; /* Centre les éléments dans leurs cellules de grille */
-    align-content: start; /* Align les lignes de la grille en haut */
-}
-
-/* Assurez-vous que le texte du titre du container n'est pas affecté par la grille */
-.directory-container > p {
-    grid-column: 1 / -1; /* Fait en sorte que le paragraphe prenne toute la largeur de la grille */
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #03e9f4; /* Couleur d'accentuation */
-    margin-bottom: 15px; /* Ajusté pour le gap de la grille */
-    margin-top: 0; /* Pas de marge supérieure si en première ligne */
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Bloc de chaque membre */
-.member-block {
-    width: 100%; /* Le bloc prendra toute la largeur de sa cellule de grille */
-    padding: 15px;
-    background: #2a2a2a;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px; /* Espacement entre les blocs */
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.directory-container p {
+    grid-column: 1 / -1; /* Prend toute la largeur de la grille */
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8em;
+    color: #00e6ff; /* Couleur du texte du titre */
+    margin-bottom: 25px;
+    text-shadow: 0 0 8px #00e6ff, 0 0 15px #00e6ff;
+}
+
+/* Styles pour chaque bloc de membre */
+.member-block {
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(0, 230, 255, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    word-wrap: break-word;
-    box-sizing: border-box; /* S'assurer que padding et border sont inclus dans la largeur */
+    cursor: pointer;
+    overflow: hidden; /* Pour que la bordure reste dans le bloc */
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 230, 255, 0.15);
 }
 
 .member-block:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 230, 255, 0.4);
 }
 
 .member-block .photo {
@@ -82,122 +63,199 @@
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    margin: 0 auto 15px auto;
-    border: 3px solid #03e9f4; /* Bordure colorée */
+    margin-bottom: 10px;
+    border: 3px solid #00e6ff;
+    box-shadow: 0 0 10px rgba(0, 230, 255, 0.6);
 }
 
 .member-block strong {
-    display: block;
-    font-size: 1.2rem;
-    color: #f0f0f0;
+    color: #e0faff;
+    font-size: 1.2em;
     margin-bottom: 5px;
-    font-family: 'Montserrat', sans-serif;
 }
 
 .member-block .profession {
-    display: block;
-    font-size: 0.9rem;
-    color: #b0b0b0;
-    margin-bottom: 10px;
+    color: #a0f0ff;
+    font-size: 0.9em;
+    margin-bottom: 8px;
 }
 
 .member-block a {
-    display: block;
-    color: #00e6ff; /* Couleur des liens */
+    color: #00e6ff;
     text-decoration: none;
+    font-weight: bold;
     margin-bottom: 5px;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .member-block a:hover {
     color: #00c0d7;
-    text-decoration: underline;
 }
 
 .member-block .contact-email {
-    display: block;
-    font-size: 0.85rem;
-    color: #888;
+    color: #b0e0ff;
+    font-size: 0.85em;
+    word-break: break-all;
 }
 
-.member-block .separator-line {
-    width: 80%;
+.separator-line {
+    width: 60%;
     height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 15px auto 0 auto;
+    background: linear-gradient(to right, transparent, rgba(0, 230, 255, 0.5), transparent);
+    margin: 15px 0;
 }
 
 /* Styles pour le bouton de retour en haut */
 #backToTopButton {
-    display: none; /* Caché par défaut */
-    position: fixed; /* Fixe sur la page */
-    bottom: 20px; /* À 20px du bas */
-    right: 20px; /* À 20px de la droite */
-    background-color: #03e9f4; /* Couleur d'accentuation */
-    color: #1a1a1a; /* Texte sombre */
-    border: none;
-    border-radius: 50%; /* Bouton rond */
-    width: 50px;
-    height: 50px;
+    display: none; /* Masqué par défaut */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
     font-size: 24px;
-    line-height: 50px; /* Centre verticalement l'icône */
-    text-align: center;
+    border: none;
+    outline: none;
+    background-color: rgba(0, 230, 255, 0.7);
+    color: white;
     cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.3s, background-color 0.3s;
-    z-index: 1000; /* Assure qu'il est au-dessus des autres éléments */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 10px 15px;
+    border-radius: 50%;
+    transition: background-color 0.3s, opacity 0.5s;
+    box-shadow: 0 0 15px rgba(0, 230, 255, 0.7);
 }
 
 #backToTopButton:hover {
-    opacity: 1;
     background-color: #00c0d7;
 }
 
-/* Media Queries pour la réactivité */
-@media (min-width: 1201px) {
-    #topMembers {
-        grid-template-columns: repeat(4, 1fr);
-    }
+/* Styles pour l'icône animée */
+.icon-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 0;
+    align-items: center;
+    padding: 0 20px;
 }
 
-@media (max-width: 992px) {
-    .directory-container {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+.icon {
+    width: 80px;
+    opacity: 0;
+    transform: translateY(40px) rotate(-15deg);
+    transition: all 0.6s ease-out;
 }
 
+/* Style pour le H3 "Hybrid Human-Tech Network" */
+body h3#mainTitle { /* Utilisez l'ID pour plus de spécificité */
+    text-align: center;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    letter-spacing: 2px;
+    margin: 40px 0 20px;
+    text-shadow:
+        0 0 5px #03e9f4,
+        0 0 10px #03e9f4,
+        0 0 20px #03e9f4;
+}
+
+/* Styles pour le cookie banner */
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 10, 0.98);
+    color: #e0faff;
+    padding: 1rem;
+    z-index: 9999;
+    box-shadow: 0 -2px 20px rgba(0, 230, 255, 0.3);
+    font-family: 'Open Sans', sans-serif; /* Ou 'Inter' si vous l'avez */
+    font-size: 0.95rem;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    box-sizing: border-box;
+}
+
+#cookie-banner p {
+    margin: 0;
+    line-height: 1.5;
+    max-width: 100%;
+    word-break: break-word;
+}
+
+#cookie-banner button {
+    align-self: flex-end;
+    background: #00e6ff;
+    color: #000;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+#cookie-banner button:hover {
+    background: #00c0d7;
+}
+
+/* Styles pour la section premium / canvas */
+.premium-section {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.premium-section canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: transparent;
+    mix-blend-mode: screen;
+}
+
+.premium-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #d5d5d5;
+    padding: 40px 20px;
+    max-width: 900px;
+}
+
+/* Media queries */
 @media (max-width: 768px) {
-    .directory-container {
-        grid-template-columns: 1fr;
-        padding: 15px;
-        gap: 15px;
+    .slider-wrapper { /* Si ce style est lié à Swiper, il devrait être dans un CSS Swiper */
+        aspect-ratio: 1920 / 720;
+        max-height: none;
+        height: auto;
     }
-    .directory-container > p {
-        margin-bottom: 10px;
-    }
-    .members-wrapper h3 {
-        font-size: 1.5rem;
-        margin-bottom: 30px;
-    }
-}
 
-@media (max-width: 480px) {
-    .members-wrapper {
-        padding: 10px;
+    .slider-thumbnails .swiper-slide { /* Si ce style est lié à Swiper, il devrait être dans un CSS Swiper */
+        width: 40px;
+        height: 20px;
     }
-    .member-block {
-        padding: 10px;
+
+    .swiper-button-prev,
+    .swiper-button-next { /* Si ce style est lié à Swiper, il devrait être dans un CSS Swiper */
+        width: 36px;
+        height: 36px;
+        font-size: 1.5rem;
     }
-    .member-block .photo {
-        width: 80px;
-        height: 80px;
-    }
-    .member-block strong {
-        font-size: 1rem;
-    }
-    .member-block .profession, .member-block a, .member-block .contact-email {
-        font-size: 0.8rem;
+    .directory-container {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
     }
 }
