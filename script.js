@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Script est en cours d'exécution : DOMContentLoaded a été déclenché.");
 
-    const topMembersContainer = document.getElementById('topMembers');
-    const bottomMembersContainer = document.getElementById('bottomMembers');
+    const topMembersContainer = document.getElementById('topMembers'); // Section "Membres à l'honneur"
+    const bottomMembersContainer = document.getElementById('bottomMembers'); // Section "Nos nouveaux membres"
     
-    const membersDataUrl = 'https://bw-n.github.io/new-members-featured/members.json';
+    const membersDataUrl = 'https://bw-n.github.io/new-members-featured/members.json'; // URL de GitHub Pages
 
     if (!topMembersContainer) {
         console.error("L'élément avec l'ID 'topMembers' n'a pas été trouvé.");
@@ -28,8 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return response.json();
         })
-        .then(members => {
-            console.log("Données des membres récupérées avec succès :", members);
+        .then(allMembers => { // Renommé 'allMembers' pour plus de clarté
+            console.log("Données des membres récupérées avec succès :", allMembers);
+
+            // Création d'une copie de la liste pour la manipulation du turnover
+            let rotatingMembers = [...allMembers]; // Utilisez cette liste pour la rotation
 
             const createMemberBlock = (member) => {
                 const memberBlock = document.createElement('div');
@@ -48,45 +51,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 return memberBlock;
             };
 
-            // ---- Logique pour la section "Membres à l'honneur" (topMembers) ----
-            if (topMembersContainer) {
-                const featuredMembersCount = 4; // Nombre de membres à afficher en "honneur"
-                let currentFeaturedIndex = 0;
+            // Fonction de mise à jour des deux sections
+            const updateMembersDisplay = () => {
+                const featuredCount = 4; // Nombre de membres dans la section "Membres à l'honneur"
 
-                const updateFeaturedMembers = () => {
-                    topMembersContainer.innerHTML = ''; // Nettoyer le contenu existant
-                    
-                    // Sélectionner 4 membres à partir de l'index courant
-                    const membersToShow = [];
-                    for (let i = 0; i < featuredMembersCount; i++) {
-                        membersToShow.push(members[(currentFeaturedIndex + i) % members.length]);
-                    }
-
-                    membersToShow.forEach(member => {
+                // ---- Logique pour la section "Membres à l'honneur" (topMembers) ----
+                if (topMembersContainer) {
+                    topMembersContainer.innerHTML = ''; // Nettoyer le contenu
+                    const featuredMembers = rotatingMembers.slice(0, featuredCount);
+                    featuredMembers.forEach(member => {
                         topMembersContainer.appendChild(createMemberBlock(member));
                     });
+                    console.log(`Membres à l'honneur mis à jour. Affichage des ${featuredMembers.length} premiers.`);
+                }
 
-                    // Passer à l'ensemble de membres suivant pour la prochaine itération
-                    currentFeaturedIndex = (currentFeaturedIndex + 1) % members.length;
-                    
-                    console.log(`Membres à l'honneur mis à jour. Index de départ: ${currentFeaturedIndex}`);
-                };
+                // ---- Logique pour la section "Nos nouveaux membres" (bottomMembers) ----
+                if (bottomMembersContainer) {
+                    bottomMembersContainer.innerHTML = ''; // Nettoyer le contenu
+                    const otherMembers = rotatingMembers.slice(featuredCount); // Le reste des membres
+                    otherMembers.forEach(member => {
+                        bottomMembersContainer.appendChild(createMemberBlock(member));
+                    });
+                    console.log(`${otherMembers.length} membres ajoutés à la section "Nos nouveaux membres".`);
+                }
 
-                // Afficher les membres une première fois
-                updateFeaturedMembers();
+                // ---- Logique de rotation (le "turnover en chaîne") ----
+                // Déplacer le premier membre vers la fin de la liste
+                const firstMember = rotatingMembers.shift(); // Retire le premier élément
+                rotatingMembers.push(firstMember); // L'ajoute à la fin
+                console.log("Rotation effectuée : le premier membre est passé en fin de liste.");
+            };
 
-                // Mettre à jour les membres toutes les 10 secondes (10000 millisecondes)
-                setInterval(updateFeaturedMembers, 10000); 
-            }
+            // Appeler la fonction une première fois pour l'affichage initial
+            updateMembersDisplay();
 
-            // ---- Logique pour la section "Nos nouveaux membres" (bottomMembers) ----
-            if (bottomMembersContainer) {
-                bottomMembersContainer.innerHTML = ''; // Nettoyer le contenu existant
-                members.forEach(member => {
-                    bottomMembersContainer.appendChild(createMemberBlock(member));
-                });
-                console.log(`${members.length} membres ajoutés à la section "Nos nouveaux membres".`);
-            }
+            // Mettre à jour les membres toutes les 10 secondes (10000 millisecondes)
+            setInterval(updateMembersDisplay, 10000); 
+
         })
         .catch(error => {
             console.error("Erreur lors du chargement ou du traitement des membres :", error);
