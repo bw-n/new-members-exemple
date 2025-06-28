@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bottomMembersContainer = document.getElementById('bottomMembers');
     
     // C'est cette ligne que vous devez mettre à jour
-    const membersDataUrl = 'https://raw.githubusercontent.com/bw-n/new-members-featured/main/new-members-featured/members.json'; 
+    const membersDataUrl = 'https://github.com/bw-n/new-members-featured/blob/main/script.js'; 
 
     if (!bottomMembersContainer) {
         console.error("L'élément avec l'ID 'bottomMembers' n'a pas été trouvé.");
