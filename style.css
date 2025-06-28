@@ -223,7 +223,7 @@ body h3#mainTitle { /* Utilisez l'ID pour plus de spécificité */
     width: 100%;
     height: 100%;
     z-index: 0;
-    background: transparent;
+    background: #000; /* Ajout du fond noir ici */
     mix-blend-mode: screen;
 }
 
