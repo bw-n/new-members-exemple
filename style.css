@@ -10,14 +10,14 @@ html, body {
 }
 *, *::before, *::after { box-sizing: inherit; }
 
-/* Wrapper global pour la section */
+/* Wrapper global pour la section, si nécessaire */
 .members-wrapper {
     width: 100%;
     padding: 20px; /* Ajoute un peu de marge autour du contenu */
     box-sizing: border-box;
 }
 
-/* Styles pour le titre H3 */
+/* Styles pour le titre H3 qui était dans votre code d'origine */
 h3 {
     color: #fff;
     text-align: center;
@@ -28,76 +28,53 @@ h3 {
     letter-spacing: 2px;
 }
 
-/* --- Nouveaux Styles pour les Filtres --- */
-.filters-section {
-    display: flex; /* Initialement visible */
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-bottom: 2.5rem;
-    padding: 15px; /* Ajouté pour un peu de respiration */
-    background: #1a1a1a;
+/* Conteneurs pour les membres (top et bottom) */
+.directory-container {
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center; /* Centre le texte dans ces conteneurs */
+    background: #1a1a1a; /* Un fond sombre pour contraster */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    /* --- NOUVEAU : Styles pour la grille CSS --- */
+    display: grid;
+    /* Par défaut, 3 colonnes de taille égale, avec un minimum de 280px par colonne. */
+    /* Utilisez repeat(auto-fit, minmax(280px, 1fr)) pour que ça s'adapte au contenu. */
+    /* Adjusté à 250px pour correspondre à la largeur des .member-block plus tard */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px; /* Espace entre les éléments de la grille */
+    justify-content: center; /* Centre la grille horizontalement */
+    align-items: start; /* Align les éléments en haut de leur cellule de grille */
 }
 
-.filters-section button {
-    padding: 0.8rem 1.5rem;
-    border: 1px solid #00e6ff55;
-    background: #1a1a1a;
-    color: #00e6ff;
-    border-radius: 8px;
-    cursor: pointer;
+/* Assurez-vous que le texte du titre du container n'est pas affecté par la grille */
+.directory-container > p {
+    grid-column: 1 / -1; /* Fait en sorte que le paragraphe prenne toute la largeur de la grille */
+    font-size: 1.1rem;
     font-weight: 600;
-    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-.filters-section button:hover {
-    background: #00e6ff;
-    color: #000;
-    border-color: #00e6ff;
-}
-
-/* --- Nouveau Style pour le Bouton Retour --- */
-.return-btn {
-  margin-top: 2.5rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-.return-btn button {
-  background: #00e6ff;
-  border: none;
-  padding: 0.6rem 1.5rem;
-  cursor: pointer;
-  border-radius: 20px;
-  font-weight: 600;
-  color: #121212;
-  transition: background 0.3s ease;
-}
-.return-btn button:hover {
-  background: #00cde0;
+    color: #03e9f4; /* Couleur d'accentuation */
+    margin-bottom: 15px; /* Ajusté pour le gap de la grille */
+    margin-top: 0; /* Pas de marge supérieure si en première ligne */
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* --- Styles pour la grille des résultats (où les membres seront affichés) --- */
-.member-results-grid {
-    display: grid; /* Utilise CSS Grid pour l'affichage */
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adaptatif */
-    gap: 1.5rem; /* Espace entre les cartes */
-    max-width: 1200px; /* Largeur maximale de la grille */
-    margin: 30px auto; /* Centre la grille */
-}
-
-/* Bloc de chaque membre (utilisé pour les membres filtrés) */
+/* Bloc de chaque membre */
 .member-block {
+    /* display: inline-block; <-- SUPPRIMÉ, Géré par CSS Grid */
+    /* vertical-align: top; <-- SUPPRIMÉ, Géré par CSS Grid */
+    width: 100%; /* Le bloc prendra toute la largeur de sa cellule de grille */
+    /* margin: 15px; <-- SUPPRIMÉ, Géré par gap de la grille */
     padding: 15px;
     background: #2a2a2a;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex; /* Utilise flexbox pour l'alignement interne */
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    /* Assure que le texte déborde correctement si nécessaire */
+    word-wrap: break-word;
+    box-sizing: border-box; /* S'assurer que padding et border sont inclus dans la largeur */
 }
 
 .member-block:hover {
@@ -111,7 +88,7 @@ h3 {
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    margin-bottom: 15px;
+    margin: 0 auto 15px auto;
     border: 3px solid #03e9f4; /* Bordure colorée */
 }
 
@@ -157,8 +134,7 @@ h3 {
     margin: 15px auto 0 auto;
 }
 
-/* L'icon-container et .icon sont probablement gérés par le thème principal Weebly,
-   mais si vous voulez les avoir dans l'iframe, le style est ici */
+/* Styles pour l'icône et l'effet de scroll (si vous les incluez) */
 .icon-container {
     display: flex;
     justify-content: center;
@@ -176,30 +152,50 @@ h3 {
 }
 
 /* Media Queries pour la réactivité */
-@media (max-width: 768px) {
-    .member-results-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 1rem;
+@media (max-width: 1200px) {
+    .directory-container {
+        /* 3 colonnes par défaut sur les grands écrans */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
-    .filters-section button {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+    .directory-container {
+        /* 2 colonnes sur les tablettes */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .directory-container {
+        /* 1 colonne sur les mobiles */
+        grid-template-columns: 1fr;
+        padding: 15px; /* Réduit le padding sur mobile */
+    }
+    .directory-container p {
+        margin-bottom: 10px;
     }
     h3 {
         font-size: 1.5rem;
+        margin-bottom: 30px;
     }
 }
 
 @media (max-width: 480px) {
-    .member-results-grid {
-        grid-template-columns: 1fr; /* Une seule colonne sur les très petits écrans */
-        gap: 0.8rem;
+    .members-wrapper {
+        padding: 10px;
     }
     .member-block {
-        width: 95%; /* Prend presque toute la largeur disponible */
-        margin: 10px auto; /* Centre les blocs */
+        padding: 10px;
     }
-    h3 {
-        font-size: 1.2rem;
+    .member-block .photo {
+        width: 80px;
+        height: 80px;
+    }
+    .member-block strong {
+        font-size: 1rem;
+    }
+    .member-block .profession, .member-block a, .member-block .contact-email {
+        font-size: 0.8rem;
     }
 }
