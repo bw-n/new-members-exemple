@@ -1,1 +1,205 @@
-.directory-container,.member-block{border-radius:8px;text-align:center}.member-block,h3{text-align:center}body,html{margin:0;padding:0;box-sizing:border-box;overflow-x:hidden;background:0 0;color:#d5d5d5;font-family:'Open Sans',sans-serif}.member-block strong,h3{font-family:Montserrat,sans-serif}*,::after,::before{box-sizing:inherit}.members-wrapper{width:100%;padding:20px;box-sizing:border-box}h3{color:#fff;margin-top:20px;margin-bottom:40px;font-size:1.8rem;letter-spacing:2px}.directory-container{padding:20px;margin-bottom:30px;background:#1a1a1a;box-shadow:0 4px 8px rgba(0,0,0,.2)}.directory-container p{font-size:1.1rem;font-weight:600;color:#03e9f4;margin-bottom:25px;text-transform:uppercase;letter-spacing:1px}.member-block{display:inline-block;vertical-align:top;width:220px;margin:15px;padding:15px;background:#2a2a2a;box-shadow:0 2px 4px rgba(0,0,0,.1);transition:transform .3s,box-shadow .3s}.member-block:hover{transform:translateY(-5px);box-shadow:0 6px 12px rgba(0,0,0,.3)}.member-block .photo{width:100px;height:100px;border-radius:50%;background-size:cover;background-position:center;margin:0 auto 15px;border:3px solid #03e9f4}.member-block strong{display:block;font-size:1.2rem;color:#f0f0f0;margin-bottom:5px}.member-block .profession{display:block;font-size:.9rem;color:#b0b0b0;margin-bottom:10px}.member-block a{display:block;color:#00e6ff;text-decoration:none;margin-bottom:5px;font-size:.9rem;transition:color .3s}.member-block a:hover{color:#00c0d7;text-decoration:underline}.member-block .contact-email{display:block;font-size:.85rem;color:#888}.member-block .separator-line{width:80%;height:1px;background:rgba(255,255,255,.1);margin:15px auto 0}.icon-container{display:flex;justify-content:center;flex-direction:column;gap:40px;margin-top:0;align-items:center}.icon{width:80px;opacity:0;transform:translateY(40px) rotate(-15deg);transition:.6s ease-out}@media (max-width:992px){.member-block{width:45%;margin:10px 2%}}@media (max-width:768px){.member-block{width:80%;margin:15px auto;display:block}h3{font-size:1.5rem}.directory-container p{font-size:1rem}}@media (max-width:480px){.member-block{width:95%;margin:10px auto}}
+/* Styles généraux pour le corps de l'iframe */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    background: transparent; /* IMPORTANT: Rend le fond de l'iframe transparent */
+    color: #d5d5d5;
+    font-family: 'Open Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+/* Wrapper global pour la section */
+.members-wrapper {
+    width: 100%;
+    padding: 20px; /* Ajoute un peu de marge autour du contenu */
+    box-sizing: border-box;
+}
+
+/* Styles pour le titre H3 */
+h3 {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+/* --- Nouveaux Styles pour les Filtres --- */
+.filters-section {
+    display: flex; /* Initialement visible */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+    padding: 15px; /* Ajouté pour un peu de respiration */
+    background: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.filters-section button {
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #00e6ff55;
+    background: #1a1a1a;
+    color: #00e6ff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.filters-section button:hover {
+    background: #00e6ff;
+    color: #000;
+    border-color: #00e6ff;
+}
+
+/* --- Nouveau Style pour le Bouton Retour --- */
+.return-btn {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.return-btn button {
+  background: #00e6ff;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #121212;
+  transition: background 0.3s ease;
+}
+.return-btn button:hover {
+  background: #00cde0;
+}
+
+/* --- Styles pour la grille des résultats (où les membres seront affichés) --- */
+.member-results-grid {
+    display: grid; /* Utilise CSS Grid pour l'affichage */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adaptatif */
+    gap: 1.5rem; /* Espace entre les cartes */
+    max-width: 1200px; /* Largeur maximale de la grille */
+    margin: 30px auto; /* Centre la grille */
+}
+
+/* Bloc de chaque membre (utilisé pour les membres filtrés) */
+.member-block {
+    padding: 15px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Utilise flexbox pour l'alignement interne */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.member-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.member-block .photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 15px;
+    border: 3px solid #03e9f4; /* Bordure colorée */
+}
+
+.member-block strong {
+    display: block;
+    font-size: 1.2rem;
+    color: #f0f0f0;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.member-block .profession {
+    display: block;
+    font-size: 0.9rem;
+    color: #b0b0b0;
+    margin-bottom: 10px;
+}
+
+.member-block a {
+    display: block;
+    color: #00e6ff; /* Couleur des liens */
+    text-decoration: none;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.member-block a:hover {
+    color: #00c0d7;
+    text-decoration: underline;
+}
+
+.member-block .contact-email {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.member-block .separator-line {
+    width: 80%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 15px auto 0 auto;
+}
+
+/* L'icon-container et .icon sont probablement gérés par le thème principal Weebly,
+   mais si vous voulez les avoir dans l'iframe, le style est ici */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 0;
+    align-items: center;
+}
+
+.icon {
+    width: 80px;
+    opacity: 0;
+    transform: translateY(40px) rotate(-15deg);
+    transition: all 0.6s ease-out;
+}
+
+/* Media Queries pour la réactivité */
+@media (max-width: 768px) {
+    .member-results-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+    }
+    .filters-section button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .member-results-grid {
+        grid-template-columns: 1fr; /* Une seule colonne sur les très petits écrans */
+        gap: 0.8rem;
+    }
+    .member-block {
+        width: 95%; /* Prend presque toute la largeur disponible */
+        margin: 10px auto; /* Centre les blocs */
+    }
+    h3 {
+        font-size: 1.2rem;
+    }
+}
