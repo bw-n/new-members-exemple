@@ -1,1 +1,165 @@
+/* Styles généraux pour le corps de l'iframe */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    background: transparent; /* IMPORTANT: Rend le fond de l'iframe transparent */
+    color: #d5d5d5;
+    font-family: 'Open Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: inherit; }
 
+/* Wrapper global pour la section, si nécessaire */
+.members-wrapper {
+    width: 100%;
+    padding: 20px; /* Ajoute un peu de marge autour du contenu */
+    box-sizing: border-box;
+}
+
+/* Styles pour le titre H3 qui était dans votre code d'origine */
+h3 {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+/* Conteneurs pour les membres (top et bottom) */
+.directory-container {
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center; /* Centre le texte dans ces conteneurs */
+    background: #1a1a1a; /* Un fond sombre pour contraster */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.directory-container p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #03e9f4; /* Couleur d'accentuation */
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Bloc de chaque membre */
+.member-block {
+    display: inline-block; /* Pour aligner les blocs côte à côte */
+    vertical-align: top; /* Aligne en haut si les hauteurs varient */
+    width: 220px; /* Largeur fixe pour chaque bloc */
+    margin: 15px; /* Marge entre les blocs */
+    padding: 15px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.member-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.member-block .photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto 15px auto;
+    border: 3px solid #03e9f4; /* Bordure colorée */
+}
+
+.member-block strong {
+    display: block;
+    font-size: 1.2rem;
+    color: #f0f0f0;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.member-block .profession {
+    display: block;
+    font-size: 0.9rem;
+    color: #b0b0b0;
+    margin-bottom: 10px;
+}
+
+.member-block a {
+    display: block;
+    color: #00e6ff; /* Couleur des liens */
+    text-decoration: none;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.member-block a:hover {
+    color: #00c0d7;
+    text-decoration: underline;
+}
+
+.member-block .contact-email {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.member-block .separator-line {
+    width: 80%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 15px auto 0 auto;
+}
+
+/* Styles pour l'icône et l'effet de scroll (si vous les incluez) */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 0;
+    align-items: center;
+}
+
+.icon {
+    width: 80px;
+    opacity: 0;
+    transform: translateY(40px) rotate(-15deg);
+    transition: all 0.6s ease-out;
+}
+
+/* Media Queries pour la réactivité */
+@media (max-width: 992px) {
+    .member-block {
+        width: 45%; /* Deux colonnes sur des écrans de taille moyenne */
+        margin: 10px 2%;
+    }
+}
+
+@media (max-width: 768px) {
+    .member-block {
+        width: 80%; /* Une seule colonne sur les petits écrans pour plus de lisibilité */
+        margin: 15px auto;
+        display: block; /* S'assure qu'ils prennent toute la largeur disponible */
+    }
+    h3 {
+        font-size: 1.5rem;
+    }
+    .directory-container p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .member-block {
+        width: 95%;
+        margin: 10px auto;
+    }
+}
