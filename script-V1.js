@@ -1,4 +1,3 @@
-<script>
 document.addEventListener('DOMContentLoaded', () => {
   const topMembersContainer = document.getElementById('topMembers');
   const bottomMembersContainer = document.getElementById('bottomMembers');
@@ -57,4 +56,3 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 });
-</script>
